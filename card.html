@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>С днём рождения!</title>
+<link href="https://fonts.googleapis.com/css2?family=Marck+Script&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4b0b3;--bg2:#f9d3d2;--ink:#c2455f;--paper:#fffaf3;--text:#5a2e3a;
+ box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#f4b0b3;--bg2:#f9d3d2;--ink:#c2455f;--paper:#fffaf3;--text:#5a2e3a}}
+html{height:100%}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;height:100%;background:radial-gradient(circle at 50% 30%,var(--bg2),var(--bg));overflow:hidden;
+ font-family:'Marck Script',cursive,Georgia,serif;color:var(--text)}
+#stage{position:absolute;left:50%;bottom:2vh;width:340px;height:600px;margin-left:-170px;transform-origin:center bottom;transform:scale(var(--s,1))}
+.env{position:absolute;left:30px;bottom:20px;width:280px;height:190px;perspective:900px;cursor:pointer}
+.env>*{position:absolute;left:0;width:100%}
+.back{top:0;height:100%;background:#f1e3e3;border-radius:8px;z-index:1;box-shadow:0 18px 30px rgba(150,50,70,.25)}
+.front{top:0;height:100%;z-index:3;background:linear-gradient(160deg,#fff,#f6ecec);clip-path:polygon(0 0,50% 55%,100% 0,100% 100%,0 100%);border-radius:8px}
+.front span{position:absolute;left:0;right:0;bottom:16px;text-align:center;font-size:30px;color:var(--ink)}
+.flap{top:0;height:55%;z-index:4;transform-origin:top;transition:transform .8s ease,background .01s .4s;
+ clip-path:polygon(0 0,100% 0,50% 100%);background:linear-gradient(#fff,#f3e6e6)}
+.flap i{position:absolute;left:50%;bottom:14px;margin-left:-11px;font-style:normal;font-size:24px;color:#e0566f}
+.env.open .flap{transform:rotateX(180deg);background:#f0dcdc}
+.env.open .flap i{display:none}
+.env.behind .flap{z-index:1}
+.env.open{cursor:default}
+#hint{position:absolute;left:0;right:0;bottom:-6px;text-align:center;font-size:20px;color:#fff;text-shadow:0 1px 4px rgba(150,50,70,.5);animation:pulse 1.6s infinite;transition:opacity .4s}
+@keyframes pulse{50%{transform:scale(1.08)}}
+.bq{position:absolute;left:40px;bottom:115px;width:260px;height:350px;z-index:2;opacity:0;transform:translateY(110px) scale(.7);transform-origin:center bottom;pointer-events:none}
+.bq.up{opacity:1;transform:translateY(-100px) scale(1);transition:transform 1.5s cubic-bezier(.2,.9,.3,1.1),opacity .5s;pointer-events:auto}
+.sway{position:absolute;inset:0;transform-origin:center bottom}
+.bq.done .sway{animation:sway 5s ease-in-out infinite}
+@keyframes sway{50%{transform:rotate(1.5deg)}}
+.stem{position:absolute;left:127px;bottom:0;width:6px;border-radius:3px;transform-origin:bottom;background:linear-gradient(90deg,#1f8a3d,#4cc26a,#1f8a3d)}
+.leaf{position:absolute;width:34px;height:20px;background:radial-gradient(circle at 20% 80%,#6fdc8a,#1f8a3d);border-radius:0 100% 0 100%;box-shadow:inset -2px -2px 4px rgba(0,60,20,.3)}
+.rose{position:absolute;transform-style:preserve-3d;filter:drop-shadow(0 6px 5px rgba(80,20,40,.35))}
+.pt{position:absolute;left:50%;top:50%;border-radius:50% 50% 46% 46%/62% 62% 38% 38%;transform-origin:50% 100%}
+.rib{position:absolute;left:82px;bottom:104px;width:96px;height:16px;border-radius:4px;background:linear-gradient(#ff7ea1,#d83e6b);box-shadow:0 3px 5px rgba(80,20,40,.3)}
+.bow{position:absolute;left:50%;top:-8px;width:0;height:0}
+.bow b{position:absolute;top:0;width:34px;height:26px;background:linear-gradient(#ff7ea1,#d83e6b);border-radius:50%}
+.bow b:first-child{left:-36px;transform:rotate(-18deg)}
+.bow b:last-child{left:2px;transform:rotate(18deg)}
+.bow u{position:absolute;left:-8px;top:8px;width:16px;height:16px;border-radius:50%;background:#c52f5c}
+.tag{position:absolute;left:130px;top:230px;width:0;transform-origin:top;animation:swing 3s ease-in-out infinite;cursor:pointer;z-index:5}
+@keyframes swing{0%,100%{transform:rotate(5deg)}50%{transform:rotate(-5deg)}}
+.string{position:absolute;left:-1px;top:0;width:2px;height:34px;background:#d83e6b}
+.mini{position:absolute;left:-42px;top:32px;width:84px;height:58px;background:linear-gradient(160deg,#fff,#f3e4e4);border-radius:5px;box-shadow:0 6px 10px rgba(80,20,40,.3);text-align:center;padding-top:22px;font-size:20px;color:var(--ink)}
+.mini:before{content:"";position:absolute;left:0;top:0;width:100%;height:50%;background:#f7d9dc;clip-path:polygon(0 0,100% 0,50% 100%);border-radius:5px 5px 0 0}
+.tag:after{content:"";position:absolute;left:-52px;top:20px;width:104px;height:84px;border-radius:12px;animation:glow 1.6s infinite}
+@keyframes glow{50%{box-shadow:0 0 18px 6px rgba(255,255,255,.8)}}
+.hs{position:absolute;color:#ff6f91;pointer-events:none;opacity:0;animation:fly 3.5s ease-out forwards}
+@keyframes fly{0%{opacity:0;transform:translateY(0) scale(.5)}15%{opacity:.9}100%{opacity:0;transform:translateY(-320px) scale(1.2) rotate(20deg)}}
+.fh{position:absolute;z-index:6;pointer-events:none;opacity:0;filter:drop-shadow(0 6px 4px rgba(120,30,60,.35))}
+#ov{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(120,30,50,.45);opacity:0;pointer-events:none;transition:opacity .5s;padding:20px;z-index:20}
+#ov.show{opacity:1;pointer-events:auto}
+.paper{width:100%;max-width:340px;background:repeating-linear-gradient(var(--paper) 0 33px,#f0dfd4 33px 34px);border-radius:6px;padding:28px 24px 22px;
+ box-shadow:0 20px 50px rgba(60,10,30,.5);transform:scale(.3) translateY(120px) rotate(-6deg);transition:transform .8s cubic-bezier(.2,.9,.3,1.1);text-align:center;max-height:88vh;overflow:auto}
+#ov.show .paper{transform:none}
+.paper h1{margin:0 0 10px;font-size:34px;font-weight:400;color:var(--ink)}
+.paper p{margin:0 0 14px;font-size:23px;line-height:34px;opacity:0;transform:translateY(8px);transition:all .8s}
+#ov.show p{opacity:1;transform:none}
+#ov.show p:nth-of-type(1){transition-delay:.7s}#ov.show p:nth-of-type(2){transition-delay:1.6s}#ov.show p:nth-of-type(3){transition-delay:2.5s}
+.heart{font-size:28px;color:#e0566f}
+#close{margin-top:6px;border:0;background:var(--ink);color:#fff;font:inherit;font-size:20px;padding:6px 22px;border-radius:20px;cursor:pointer}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="env" id="env">
+    <div class="back"></div>
+    <div class="flap"><i>♥</i></div>
+    <div class="front"><span>С днём рождения!</span></div>
+  </div>
+  <div class="bq" id="bq"><div class="sway" id="sway"></div></div>
+  <div id="hint">нажми на конверт</div>
+</div>
+
+<div id="ov">
+  <div class="paper">
+    <h1>С днём рождения!</h1>
+    <p>Желаю тебе всего самого лучшего, и чтобы в твои 27 годиков сбылось всё, чего ты хочешь.</p>
+    <p>Даже если между нами отстранение и обида, я всегда помню о тебе.</p>
+    <p>Ты не один <span class="heart">♥</span></p>
+    <button id="close">закрыть</button>
+  </div>
+</div>
+
+<script>
+// Подгоняем размер под экран телефона
+function fit(){var s=Math.min(1,innerWidth/340,innerHeight/620);document.documentElement.style.setProperty('--s',s)}
+fit();addEventListener('resize',fit);
+
+// Роза из лепестков: 3 слоя, объём за счёт градиентов и теней
+function rose(size,light,mid,dark){
+  var r=document.createElement('div');r.className='rose';r.style.width=r.style.height=size+'px';
+  var rings=[{n:7,w:.62,h:.66,k:1,d:0},{n:6,w:.5,h:.54,k:.8,d:25},{n:5,w:.38,h:.42,k:.6,d:10},{n:4,w:.24,h:.28,k:.4,d:40}];
+  rings.forEach(function(g,gi){
+    for(var i=0;i<g.n;i++){
+      var p=document.createElement('div');p.className='pt';
+      var w=size*g.w,h=size*g.h,a=360/g.n*i+g.d;
+      p.style.cssText='width:'+w+'px;height:'+h+'px;margin-left:'+(-w/2)+'px;margin-top:'+(-h)+'px;'+
+        'transform:translateY('+(size*.06*g.k)+'px) rotate('+a+'deg) rotateX('+(18-gi*4)+'deg);'+
+        'background:radial-gradient(ellipse at 50% 85%,'+dark+' 0%,'+mid+' 45%,'+light+' 100%);'+
+        'box-shadow:inset 0 -4px 8px rgba(0,0,0,.25),inset 0 3px 6px rgba(255,255,255,.35),0 1px 3px rgba(0,0,0,.25)';
+      r.appendChild(p);
+    }
+  });
+  return r;
+}
+// Букет: stem = [угол, длина, цвет розы, размер]
+var sw=document.getElementById('sway');
+var flowers=[
+ {a:-20,L:250,s:100,c:['#ffd3de','#ff8fa8','#e0577b']},   // розовая
+ {a:17,L:225,s:104,c:['#9fb4ff','#5b3fe0','#b13fd0']},    // сине-фиолетовая
+ {a:4,L:290,s:112,c:['#ff9a5c','#ff5a2c','#c93a12']}      // оранжевая
+];
+flowers.forEach(function(f){
+  var st=document.createElement('div');st.className='stem';st.style.height=f.L+'px';st.style.transform='rotate('+f.a+'deg)';
+  [60,130,190].forEach(function(y,i){
+    var l=document.createElement('div');l.className='leaf';l.style.bottom=y+'px';
+    if(i%2){l.style.left='6px';l.style.transform='rotate(-25deg)'}else{l.style.right='6px';l.style.transform='scaleX(-1) rotate(-25deg)'}
+    st.appendChild(l);
+  });
+  sw.appendChild(st);
+  var rad=f.a*Math.PI/180,x=130+f.L*Math.sin(rad),y=f.L*Math.cos(rad);
+  var r=rose(f.s,f.c[0],f.c[1],f.c[2]);r.style.left=(x-f.s/2)+'px';r.style.bottom=(y-f.s/2)+'px';sw.appendChild(r);
+});
+// Ленточка с бантом
+var rib=document.createElement('div');rib.className='rib';rib.innerHTML='<div class="bow"><b></b><b></b><u></u></div>';sw.appendChild(rib);
+// Маленький конверт «Открой»
+var tag=document.createElement('div');tag.className='tag';tag.innerHTML='<div class="string"></div><div class="mini">Открой</div>';sw.appendChild(tag);
+
+var env=document.getElementById('env'),bq=document.getElementById('bq'),hint=document.getElementById('hint'),ov=document.getElementById('ov'),opened=false;
+
+function hearts(){
+  for(var i=0;i<14;i++)(function(i){setTimeout(function(){
+    var h=document.createElement('div');h.className='hs';h.textContent='♥';
+    h.style.left=(60+Math.random()*220)+'px';h.style.bottom=(120+Math.random()*80)+'px';h.style.fontSize=(14+Math.random()*22)+'px';
+    document.getElementById('stage').appendChild(h);setTimeout(function(){h.remove()},3600);
+  },i*140)})(i);
+}
+// Объёмные сердечки: выпадают из конверта по бокам и остаются лежать
+function dropHearts(){
+  var st=document.getElementById('stage');
+  if(!document.getElementById('hdefs')){
+    var d=document.createElement('div');d.id='hdefs';d.style.cssText='position:absolute;width:0;height:0;overflow:hidden';
+    d.innerHTML='<svg width="0" height="0"><defs><radialGradient id="hg" cx="35%" cy="28%" r="80%"><stop offset="0" stop-color="#ffd0de"/><stop offset=".45" stop-color="#ff7fa0"/><stop offset="1" stop-color="#d8406d"/></radialGradient></defs></svg>';
+    st.appendChild(d);
+  }
+  var list=[
+    {side:-1,x:-8,s:50,r:-18},{side:-1,x:14,s:34,r:12},{side:-1,x:-2,s:26,r:-30},{side:-1,x:30,s:22,r:20},
+    {side:1,x:300,s:48,r:16},{side:1,x:280,s:32,r:-14},{side:1,x:318,s:26,r:28},{side:1,x:294,s:20,r:-22}
+  ];
+  list.forEach(function(h,i){
+    var el=document.createElement('div');el.className='fh';
+    el.style.width=h.s+'px';el.style.height=(h.s*.9)+'px';el.style.left='155px';el.style.bottom='115px';
+    el.innerHTML='<svg viewBox="0 0 100 90" width="100%" height="100%"><path d="M50 85C10 55 0 35 0 22C0 8 12 0 26 0C37 0 46 6 50 15C54 6 63 0 74 0C88 0 100 8 100 22C100 35 90 55 50 85Z" fill="url(#hg)"/><ellipse cx="28" cy="20" rx="13" ry="8" fill="#fff" opacity=".55" transform="rotate(-30 28 20)"/></svg>';
+    st.appendChild(el);
+    var gy=115-(4+Math.random()*22);            // насколько вниз упадёт (до пола)
+    var dx=h.x-155+h.s/2*0, apex=-(110+Math.random()*90);
+    var dir=h.side;
+    var f=[
+      {opacity:0,transform:'translate(0,0) scale(.3) rotate(0deg)',offset:0},
+      {opacity:1,transform:'translate('+(dx*.45)+'px,'+apex+'px) scale(1) rotate('+(dir*140)+'deg)',offset:.35,easing:'ease-in'},
+      {opacity:1,transform:'translate('+dx+'px,'+gy+'px) scale(1) rotate('+(h.r+dir*300)+'deg)',offset:.75,easing:'ease-out'},
+      {opacity:1,transform:'translate('+dx+'px,'+(gy-16)+'px) scale(1) rotate('+(h.r+dir*300)+'deg)',offset:.87,easing:'ease-in'},
+      {opacity:1,transform:'translate('+dx+'px,'+gy+'px) scale(1) rotate('+h.r+'deg)',offset:1}
+    ];
+    el.animate(f,{duration:1900,delay:i*110,fill:'both',easing:'ease-out'});
+  });
+}
+env.addEventListener('click',function(){
+  if(opened)return;opened=true;
+  env.classList.add('open');hint.style.opacity=0;
+  setTimeout(function(){env.classList.add('behind');bq.classList.add('up');hearts();dropHearts()},450);
+  setTimeout(function(){bq.classList.add('done')},2000);
+});
+tag.addEventListener('click',function(e){e.stopPropagation();ov.classList.add('show')});
+document.getElementById('close').addEventListener('click',function(){ov.classList.remove('show')});
+</script>
+</body>
+</html>
